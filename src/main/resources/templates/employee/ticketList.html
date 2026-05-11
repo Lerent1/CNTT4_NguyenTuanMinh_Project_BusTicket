@@ -17,22 +17,16 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3>Danh sách vé chờ thanh toán</h3>
 
-        <a th:href="@{/home}" class="btn btn-outline-secondary">
-            ← Quay lại
-        </a>
+        <a th:href="@{/auth/logout}" class="btn btn-outline-secondary">Đăng xuất</a>
     </div>
 
     <!-- THÔNG BÁO NẾU KHÔNG CÓ VÉ -->
-    <div th:if="${tickets == null || #lists.isEmpty(tickets)}"
-         class="alert alert-info text-center">
-
+    <div th:if="${tickets == null || #lists.isEmpty(tickets)}" class="alert alert-info text-center">
         Không có vé đang chờ xử lý.
-
     </div>
 
     <!-- DANH SÁCH VÉ -->
     <div th:if="${tickets != null && !#lists.isEmpty(tickets)}">
-
         <table class="table table-bordered table-hover">
 
             <thead class="thead-dark">
@@ -77,25 +71,16 @@
                 <td class="text-center">
 
                     <!-- XÁC NHẬN -->
-                    <form th:action="@{'/admin/tickets/confirm/' + ${ticket.id}}"
-                          method="post"
-                          style="display:inline;">
-
+                    <form th:action="@{'/admin/tickets/confirm/' + ${ticket.id}}" method="post" style="display:inline;">
                         <button class="btn btn-success btn-sm">
                             Xác nhận
                         </button>
-
                     </form>
 
-                    <!-- HỦY -->
-                    <form th:action="@{'/admin/tickets/cancel/' + ${ticket.id}}"
-                          method="post"
-                          style="display:inline;">
-
+                    <form th:action="@{'/admin/tickets/cancel/' + ${ticket.id}}" method="post" style="display:inline;">
                         <button class="btn btn-danger btn-sm">
                             Hủy
                         </button>
-
                     </form>
 
                 </td>
@@ -107,7 +92,6 @@
         </table>
 
     </div>
-
 </div>
 
 <!-- Optional JavaScript -->

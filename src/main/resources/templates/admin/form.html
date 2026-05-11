@@ -12,6 +12,15 @@
 </head>
 <body>
 
+<!-- NAV -->
+<nav class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand font-weight-bold" th:href="@{/adminHome}">
+            BusTicket Admin
+        </a>
+    </div>
+</nav>
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -26,21 +35,18 @@
 
                         <input type="hidden" th:field="*{id}">
 
-                        <!-- LICENSE -->
                         <div class="form-group">
                             <label>Bien so xe</label>
                             <input type="text" class="form-control" th:field="*{licensePlate}">
                             <small class="text-danger" th:errors="*{licensePlate}"></small>
                         </div>
 
-                        <!-- TYPE -->
                         <div class="form-group">
                             <label>Loai xe</label>
                             <input type="text" class="form-control" th:field="*{busType}">
                             <small class="text-danger" th:errors="*{busType}"></small>
                         </div>
 
-                        <!-- SEATS -->
                         <div class="form-group">
                             <label>So ghe</label>
                             <input type="number" class="form-control" th:field="*{totalSeats}">

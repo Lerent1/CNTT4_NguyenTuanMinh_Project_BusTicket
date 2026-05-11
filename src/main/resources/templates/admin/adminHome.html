@@ -12,64 +12,71 @@
 </head>
 <body>
 
-<div class="container mt-5">
+<!-- NAV -->
+<nav class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand font-weight-bold" th:href="@{/admin}">
+            BusTicket Admin
+        </a>
 
-    <div class="row">
+        <a th:href="@{/auth/logout}" class="btn btn-outline-secondary">Đăng xuất</a>
+    </div>
+</nav>
 
-        <!-- BUS -->
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h2 class="font-weight-bold">Trang Quản Ly</h2>
+        <p class="text-muted">Chọn chức năng bạn muốn quản lý</p>
+    </div>
+
+    <div class="row justify-content-center">
         <div class="col-md-4 mb-4">
+            <div class="card shadow-sm admin-card h-100">
+                <div class="card-body text-center p-4">
 
-            <div class="card shadow-sm h-100">
+                    <div class="icon-style text-danger">
+                        <i class="fas fa-bus"></i>
+                    </div>
 
-                <div class="card-body text-center">
-
-                    <i class="fas fa-bus fa-3x text-danger mb-3"></i>
-
-                    <h4>Quản Lý Xe</h4>
+                    <h4 class="font-weight-bold">Quản Lý Xe</h4>
 
                     <p class="text-muted">
-                        Quản lý danh sách xe.
+                        Quản lý danh sách xe, thêm, sửa, xóa.
                     </p>
 
                     <a th:href="@{/admin/buses}"
-                       class="btn btn-danger btn-block">
+                       class="btn btn-danger btn-lg btn-block">
                         Vào quản lý
                     </a>
 
                 </div>
-
             </div>
-
         </div>
 
-        <!-- EMPLOYEE -->
         <div class="col-md-4 mb-4">
+            <div class="card shadow-sm admin-card h-100">
+                <div class="card-body text-center p-4">
 
-            <div class="card shadow-sm h-100">
+                    <div class="icon-style text-success">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
 
-                <div class="card-body text-center">
-
-                    <i class="fas fa-user-tie fa-3x text-success mb-3"></i>
-
-                    <h4>Quản Lý Nhân Viên</h4>
+                    <h4 class="font-weight-bold">Quản Lý Nhân Viên</h4>
 
                     <p class="text-muted">
-                        Thêm, sửa, xóa nhân viên.
+                        Thêm, sửa, xóa nhân viên hệ thống.
                     </p>
 
                     <a th:href="@{/admin/addEmployee}"
-                       class="btn btn-success btn-block">
+                       class="btn btn-success btn-lg btn-block">
                         Vào quản lý
                     </a>
 
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 <!-- Optional JavaScript -->
