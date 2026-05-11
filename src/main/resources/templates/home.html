@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand font-weight-bold btn-lg" th:href="@{/home}">
+            BusTicket
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/home}">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/search-trip}">
+                        Tìm chuyến
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:href="@{/ticket/search}">
+                        Tra cứu vé
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/myTicket}">
+                        Vé của tôi
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <a th:href="@{/auth/logout}" class="btn btn-outline-secondary">Đăng xuất</a>
+</nav>
+
+<section class="hero text-center shadow">
+
+    <div class="container py-5">
+
+        <h1 class="display-4 font-weight-bold mb-3">
+            Chào mừng đến với BusTicket
+        </h1>
+
+        <p class="lead mb-4">
+            Hãy bắt đầu tìm chuyến xe phù hợp cho chuyến đi của bạn
+        </p>
+    </div>
+
+</section>
+
+<div class="container mt-5 d-flex justify-content-center">
+
+    <div class="card shadow-lg border-0 w-100 booking-card">
+
+        <div class="card-body p-5 text-center">
+
+            <h1 class="font-weight-bold mb-3">
+                <i class="fa-solid fa-bus text-primary mr-2"></i>
+                Đặt vé xe khách
+            </h1>
+
+            <p class="lead text-muted mb-4">
+                Tra cứu chuyến xe, chọn ghế và đặt vé nhanh chóng chỉ trong vài bước
+            </p>
+
+            <hr class="mb-4">
+
+            <p class="text-muted mb-4">
+                Hệ thống hỗ trợ đầy đủ các chức năng:
+            </p>
+
+            <div class="d-flex flex-wrap justify-content-center">
+
+                <a th:href="@{/search-trip}"
+                   class="btn btn-success btn-lg mx-2 mb-2 action-btn">
+
+                    <i class="fa-solid fa-bus mr-1"></i>
+                    Đặt vé
+
+                </a>
+
+                <a th:href="@{/ticket/search}"
+                   class="btn btn-info btn-lg mx-2 mb-2 action-btn">
+
+                    <i class="fa-solid fa-magnifying-glass mr-1"></i>
+                    Tra cứu
+
+                </a>
+
+                <a th:href="@{/myTicket}"
+                   class="btn btn-warning btn-lg mx-2 mb-2 action-btn text-white">
+
+                    <i class="fa-solid fa-ticket mr-1"></i>
+                    Vé của tôi
+
+                </a>
+
+                <a th:href="@{/profile}"
+                   class="btn btn-secondary btn-lg mx-2 mb-2 action-btn">
+
+                    <i class="fa-solid fa-user mr-1"></i>
+                    Hồ sơ cá nhân
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

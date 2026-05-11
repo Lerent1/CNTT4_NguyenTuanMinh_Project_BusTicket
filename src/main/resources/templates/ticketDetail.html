@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand font-weight-bold" th:href="@{/home}">BusTicket</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/search-trip}">Tìm chuyến</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/ticket/search}">Tra cứu vé</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/myTicket}">Vé của tôi</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <!-- HEADER -->
+        <div class="card-header bg-info text-white">
+            Chi tiết vé
+        </div>
+
+        <div class="card-body">
+
+            <!-- SUCCESS MESSAGE -->
+            <div th:if="${success != null}" class="alert alert-success">
+                <span th:text="${success}"></span>
+            </div>
+
+            <!-- ERROR MESSAGE -->
+            <div th:if="${error != null}" class="alert alert-danger">
+                <span th:text="${error}"></span>
+            </div>
+
+            <!-- TABLE INFO -->
+            <table class="table table-bordered">
+
+                <tr>
+                    <th>Mã vé</th>
+                    <td th:text="${ticket.code}"></td>
+                </tr>
+
+                <tr>
+                    <th>Khách hàng</th>
+                    <td th:text="${ticket.customerName}"></td>
+                </tr>
+
+                <tr>
+                    <th>Số điện thoại</th>
+                    <td th:text="${ticket.phone}"></td>
+                </tr>
+
+                <tr>
+                    <th>Email</th>
+                    <td th:text="${ticket.email}"></td>
+                </tr>
+
+                <tr>
+                    <th>Biển số xe</th>
+                    <td th:text="${ticket.trip.bus.licensePlate}"></td>
+                </tr>
+
+                <tr>
+                    <th>Loại xe</th>
+                    <td th:text="${ticket.trip.bus.busType}"></td>
+                </tr>
+
+                <tr>
+                    <th>Tài xế</th>
+                    <td th:text="${ticket.trip.bus.driverName}"></td>
+                </tr>
+
+                <tr>
+                    <th>Tuyến đường</th>
+                    <td>
+                        <span th:text="${ticket.trip.route.departure.name}"></span>
+                        →
+                        <span th:text="${ticket.trip.route.destination.name}"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Ngày giờ đi</th>
+                    <td th:text="${ticket.trip.departureTime}"></td>
+                </tr>
+
+                <tr>
+                    <th>Số ghế</th>
+                    <td th:text="${ticket.seat.seatNumber}"></td>
+                </tr>
+
+                <tr>
+                    <th>Trạng thái</th>
+                    <td th:text="${ticket.status}"></td>
+                </tr>
+
+                <tr>
+                    <th>Giá</th>
+                    <td th:text="${ticket.totalPrice}"></td>
+                </tr>
+
+            </table>
+
+            <!-- BACK -->
+            <a href="/home" class="btn btn-secondary">
+                Quay lại
+            </a>
+
+            <!-- CORE-09: NÚT HỦY -->
+            <div class="mt-3 flex " th:if="${ticket != null and ticket.status != null and ticket.status.name() != 'CANCELLED'}">
+
+                <form th:action="@{'/cancel/' + ${ticket.id}}" method="post"
+                      onsubmit="return confirm('Bạn có chắc muốn hủy vé này?');">
+
+                    <button class="btn btn-danger">
+                        Hủy vé
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

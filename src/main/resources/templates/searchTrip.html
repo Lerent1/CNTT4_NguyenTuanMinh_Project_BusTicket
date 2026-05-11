@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand font-weight-bold" th:href="@{/home}">BusTicket</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/search-trip}">Tìm chuyến</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/ticket/search}">Tra cứu vé</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/myTicket}">Vé của tôi</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="page-title mb-0">Tìm chuyến xe</h2>
+
+        <a th:href="@{/home}" class="btn btn-outline-secondary">
+            ← Quay lại
+        </a>
+    </div>
+
+    <!-- SEARCH FORM -->
+    <form method="get" action="/search-trip/result" class="card p-4 shadow-sm mb-4">
+
+        <div class="row">
+
+            <div class="col-md-4 mb-2">
+                <label>Điểm đi</label>
+                <select name="departureId" class="form-control">
+                    <option value="">-- Chọn điểm đi --</option>
+                    <option th:each="l : ${locations}"
+                            th:value="${l.id}"
+                            th:text="${l.name}">
+                    </option>
+                </select>
+                <small class="text-danger" th:text="${departureError}"></small>
+            </div>
+
+            <div class="col-md-4 mb-2">
+                <label>Điểm đến</label>
+                <select name="destinationId" class="form-control">
+                    <option value="">-- Chọn điểm đến --</option>
+                    <option th:each="l : ${locations}" th:value="${l.id}" th:text="${l.name}"></option>
+                </select>
+                <small class="text-danger" th:text="${destinationError}"></small>
+            </div>
+
+            <div class="col-md-4 mb-2">
+                <label>Ngày đi</label>
+                <input type="date" name="date" class="form-control">
+                <small class="text-danger" th:text="${dateError}"></small>
+            </div>
+
+        </div>
+
+        <div th:if="${sameLocationError}" class="alert alert-danger mt-2 mb-0">
+            <span th:text="${sameLocationError}"></span>
+        </div>
+
+        <button class="btn btn-primary mt-3">
+             Tìm chuyến
+        </button>
+
+    </form>
+
+    <!-- RESULT -->
+    <div th:if="${trips != null}">
+        <h4 class="mb-3">Danh sách chuyến xe</h4>
+
+        <!-- EMPTY -->
+        <div th:if="${#lists.isEmpty(trips)}" class="alert alert-warning text-center shadow-sm">
+            <h5>Không tìm thấy chuyến xe</h5>
+            <p class="mb-0 text-muted">Vui lòng chọn ngày hoặc tuyến khác</p>
+        </div>
+
+        <!-- LIST -->
+        <div class="card trip-card mb-3 p-3 shadow-sm" th:each="t : ${trips}">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h5 class="mb-1">
+                        <span th:text="${t.route.departure.name}"></span>
+                        →
+                        <span th:text="${t.route.destination.name}"></span>
+                    </h5>
+
+                    <small class="text-muted">
+                        Giá vé:
+                        <b th:text="${t.price}"></b> VND
+                    </small>
+                </div>
+
+                <a th:href="@{'/trip/' + ${t.id} + '/seats'}" class="btn btn-success">
+                    Chọn chuyến
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

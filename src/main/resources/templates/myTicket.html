@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            background: rgba(0,0,0,0.6); /* làm mờ nền */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .popup {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 320px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+    </style>
+
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand font-weight-bold" th:href="@{/home}">BusTicket</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/home}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/search-trip}">Tìm chuyến</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/ticket/search}">Tra cứu vé</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/myTicket}">Vé của tôi</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="page-title mb-0">Danh sách vé của bạn</h2>
+
+        <a th:href="@{/home}" class="btn btn-outline-secondary">
+            ← Quay lại
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+
+            <table class="table table-hover mb-0">
+                <thead>
+                <tr>
+                    <th>Mã vé</th>
+                    <th>Khách hàng</th>
+                    <th>Ghế</th>
+                    <th>Trạng thái</th>
+                    <th class="text-center">Hành động</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="t : ${tickets}">
+                    <td class="font-weight-bold" th:text="${t.code}"></td>
+                    <td th:text="${t.customerName}"></td>
+                    <td th:text="${t.seat.seatNumber}"></td>
+                    <td>
+                        <span th:switch="${t.status.name()}">
+
+                            <span th:case="'PAID'" class="badge badge-success"
+                                  th:text="${t.status}"></span>
+
+                            <span th:case="'PENDING'" class="badge badge-warning"
+                                  th:text="${t.status}"></span>
+
+                            <span th:case="'CANCELLED'" class="badge badge-danger"
+                                  th:text="${t.status}"></span>
+
+                            <span th:case="*"
+                                  class="badge badge-secondary"
+                                  th:text="${t.status}"></span>
+
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <a th:href="@{/ticket/search(code=${t.code}, phone=${t.phone})}"
+                           class="btn btn-sm btn-primary">
+                            Xem chi tiết
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+<div th:if="${success != null or error != null}" class="overlay">
+
+    <div class="popup">
+
+        <h4 th:if="${success != null}"
+            th:text="${success}"
+            style="color: green;">
+        </h4>
+
+        <h4 th:if="${error != null}"
+            th:text="${error}"
+            style="color: red;">
+        </h4>
+
+        <a th:href="@{/myTicket}" class="btn btn-primary mt-3">
+            OK
+        </a>
+
+    </div>
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
