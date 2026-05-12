@@ -13,8 +13,7 @@ public class ProfileService {
     private final UserRepository userRepository;
 
     public void updateProfile(String username, UserProfiles data) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow();
+        User user = userRepository.findByUsername(username).orElseThrow();
 
         UserProfiles profile = user.getProfile();
 
@@ -35,7 +34,6 @@ public class ProfileService {
     }
 
     public User getCurrentUser(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow();
+        return userRepository.findByUsername(username).orElseThrow();
     }
 }

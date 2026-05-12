@@ -24,12 +24,7 @@ public class TripController {
     // PAGE SEARCH
     @GetMapping("/search-trip")
     public String searchTripPage(Model model) {
-
-        model.addAttribute(
-                "locations",
-                locationService.findAll()
-        );
-
+        model.addAttribute("locations", locationService.findAll());
         return "searchTrip";
     }
 
@@ -51,41 +46,23 @@ public class TripController {
     ) {
 
         // load lại locations
-        model.addAttribute(
-                "locations",
-                locationService.findAll()
-        );
+        model.addAttribute("locations", locationService.findAll());
 
         // VALIDATION
         boolean hasError = false;
 
         if (departureId == null) {
-
-            model.addAttribute(
-                    "departureError",
-                    "Vui lòng chọn điểm đi"
-            );
-
+            model.addAttribute("departureError", "Vui lòng chọn điểm đi");
             hasError = true;
         }
 
         if (destinationId == null) {
-
-            model.addAttribute(
-                    "destinationError",
-                    "Vui lòng chọn điểm đến"
-            );
-
+            model.addAttribute("destinationError", "Vui lòng chọn điểm đến");
             hasError = true;
         }
 
         if (date == null) {
-
-            model.addAttribute(
-                    "dateError",
-                    "Vui lòng chọn ngày đi"
-            );
-
+            model.addAttribute("dateError", "Vui lòng chọn ngày đi");
             hasError = true;
         }
 
@@ -94,8 +71,7 @@ public class TripController {
                 && destinationId != null
                 && departureId.equals(destinationId)) {
 
-            model.addAttribute(
-                    "sameLocationError",
+            model.addAttribute("sameLocationError",
                     "Điểm đi và điểm đến không được giống nhau"
             );
 
@@ -104,37 +80,21 @@ public class TripController {
 
         // nếu có lỗi
         if (hasError) {
-
             return "searchTrip";
         }
 
         // tìm chuyến
-        List<Trip> trips =
-                tripService.findTrips(
-                        departureId,
-                        destinationId,
-                        date
-                );
-
-        model.addAttribute(
-                "trips",
-                trips
+        List<Trip> trips = tripService.findTrips(departureId, destinationId, date
         );
 
-        model.addAttribute(
-                "selectedDate",
-                date
-        );
+        model.addAttribute("trips", trips);
+
+        model.addAttribute("selectedDate", date);
 
         // không có chuyến
         if (trips.isEmpty()) {
-
-            model.addAttribute(
-                    "message",
-                    "Không tìm thấy chuyến xe phù hợp"
-            );
+            model.addAttribute("message", "Không tìm thấy chuyến xe phù hợp");
         }
-
         return "searchTrip";
     }
 
@@ -147,20 +107,9 @@ public class TripController {
 
         Trip trip = tripService.findById(tripId);
 
-        model.addAttribute(
-                "trip",
-                trip
-        );
-
-        model.addAttribute(
-                "tripId",
-                tripId
-        );
-
-        model.addAttribute(
-                "seats",
-                seatService.getSeatsByTrip(tripId)
-        );
+        model.addAttribute("trip", trip);
+        model.addAttribute("tripId", tripId);
+        model.addAttribute("seats", seatService.getSeatsByTrip(tripId));
 
         return "seatList";
     }

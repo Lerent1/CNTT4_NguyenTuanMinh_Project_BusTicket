@@ -19,16 +19,13 @@ public class DataSeeder implements CommandLineRunner {
 
         if (userRepository.findByUsername("admin").isEmpty()) {
 
-            BCryptPasswordEncoder encoder =
-                    new BCryptPasswordEncoder();
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
             User admin = new User();
 
             admin.setUsername("admin");
 
-            admin.setPasswordHash(
-                    encoder.encode("123456")
-            );
+            admin.setPasswordHash(encoder.encode("123456"));
 
             admin.setRole(Role.ADMIN);
 

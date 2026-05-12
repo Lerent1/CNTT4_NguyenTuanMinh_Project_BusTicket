@@ -22,11 +22,9 @@ public class SeatController {
             Model model
     ) {
 
-        List<Seat> seats =
-                seatService.getSeatsByTrip(tripId);
+        List<Seat> seats = seatService.getSeatsByTrip(tripId);
 
         model.addAttribute("seats", seats);
-
         model.addAttribute("tripId", tripId);
 
         return "seatList";

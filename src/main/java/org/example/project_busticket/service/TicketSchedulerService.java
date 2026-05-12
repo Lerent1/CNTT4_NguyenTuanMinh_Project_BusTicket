@@ -27,8 +27,7 @@ public class TicketSchedulerService {
 
         LocalDateTime limit = LocalDateTime.now().minusMinutes(30);
 
-        List<Ticket> expired =
-                ticketRepository.findExpiredTickets(TicketStatus.PENDING, limit);
+        List<Ticket> expired = ticketRepository.findExpiredTickets(TicketStatus.PENDING, limit);
 
         for (Ticket ticket : expired) {
 

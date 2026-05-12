@@ -6,6 +6,7 @@ import org.example.project_busticket.model.Enums.SeatStatus;
 import org.example.project_busticket.model.Enums.TicketStatus;
 import org.example.project_busticket.model.Seat;
 import org.example.project_busticket.model.Ticket;
+import org.example.project_busticket.model.User;
 import org.example.project_busticket.repository.SeatRepository;
 import org.example.project_busticket.repository.TicketRepository;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class BookingService {
     private final TicketRepository ticketRepository;
 
     @Transactional
-    public Ticket bookTicket(Long seatId, String customerName, String phone, String email) {
+    public Ticket bookTicket(Long seatId, String customerName, String phone, String email, User user) {
 
         Seat seat = seatRepository.findSeatForUpdate(seatId)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy ghế"));
@@ -49,12 +50,12 @@ public class BookingService {
 
         // ===================== CREATE TICKET =====================
         Ticket ticket = new Ticket();
-        ticket.setCode(UUID.randomUUID()
-                .toString().substring(0, 8).toUpperCase());
+        ticket.setCode(UUID.randomUUID().toString().substring(0, 8).toUpperCase());
 
         ticket.setCustomerName(customerName);
         ticket.setPhone(phone);
-        ticket.setEmail(email);
+        ticket.setEmail(email); //
+        ticket.setUser(user); //
         ticket.setSeat(seat);
         ticket.setTrip(seat.getTrip());
         ticket.setTotalPrice(seat.getTrip().getPrice());

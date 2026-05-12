@@ -31,6 +31,9 @@ public class Ticket {
     @Column(nullable = false)
     private String email;
 
+    @ManyToOne
+    private User user;
+
     private Double totalPrice;
 
     @Enumerated(EnumType.STRING)

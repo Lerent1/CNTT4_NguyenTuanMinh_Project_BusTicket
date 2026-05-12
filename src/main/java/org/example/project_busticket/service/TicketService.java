@@ -8,6 +8,8 @@ import org.example.project_busticket.model.Seat;
 import org.example.project_busticket.model.Ticket;
 import org.example.project_busticket.repository.SeatRepository;
 import org.example.project_busticket.repository.TicketRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,14 +28,12 @@ public class TicketService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy vé"));
     }
 
-    public List<Ticket> findByPhone(String phone) {
-        return ticketRepository.findByPhone(phone);
-    }
-
-    // ================= CORE-08 =================
-
     public List<Ticket> getPendingTickets() {
         return ticketRepository.findByStatus(TicketStatus.PENDING);
+    }
+
+    public List<Ticket> findByUserId(Long userId) {
+        return ticketRepository.findByUser_Id(userId);
     }
 
     @Transactional
@@ -50,7 +50,6 @@ public class TicketService {
         ticketRepository.save(ticket);
     }
 
-    // ================= CORE-09 =================
     @Transactional
     public void cancelTicket(Long ticketId) {
 
@@ -90,5 +89,15 @@ public class TicketService {
         }
 
         ticketRepository.save(ticket);
+    }
+
+    // ================= HƯỚNG 4 =================
+    public List<Object[]> getRevenueByMonth() {
+        return ticketRepository.getRevenueByRoute();
+    }
+
+    public List<Object[]> getTop5RevenueByBus() {
+        Pageable top5 = PageRequest.of(0, 5);
+        return ticketRepository.getTop5RevenueByBus(top5);
     }
 }

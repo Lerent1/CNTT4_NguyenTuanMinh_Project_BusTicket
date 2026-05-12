@@ -8,9 +8,10 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class AuthInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response,
-                             Object handler) throws Exception {
+    public boolean preHandle(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Object handler) throws Exception {
 
         String uri = request.getRequestURI();
         HttpSession session = request.getSession(false);
@@ -19,7 +20,6 @@ public class AuthInterceptor implements HandlerInterceptor {
                 ? (String) session.getAttribute("currentRole")
                 : null;
 
-        // Public paths
         if (uri.startsWith("/auth")
                 || uri.equals("/")
                 || uri.startsWith("/css")
@@ -28,15 +28,12 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        // Not logged in
         if (role == null) {
             response.sendRedirect("/auth/login");
             return false;
         }
 
-        // ADMIN only
-        if (uri.startsWith("/admin")
-                && !uri.startsWith("/admin/tickets")) {
+        if (uri.startsWith("/admin") && !uri.startsWith("/admin/tickets")) {
 
             if (!"ADMIN".equals(role)) {
                 response.sendRedirect("/home");

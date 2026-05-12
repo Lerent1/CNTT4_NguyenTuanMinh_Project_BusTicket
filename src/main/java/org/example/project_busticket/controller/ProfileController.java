@@ -20,15 +20,16 @@ public class ProfileController {
     @GetMapping("/profile")
     public String profile(Model model, HttpSession session) {
 
-        String username = (String) session.getAttribute("currentUser");
+        User user = (User) session.getAttribute("currentUser");
 
-        if (username == null) {
+        if (user == null) {
             return "redirect:/auth/login";
         }
 
-        User user = profileService.getCurrentUser(username);
+        User fullUser = profileService.getCurrentUser(user.getUsername());
 
-        model.addAttribute("user", user);
+        model.addAttribute("user", fullUser);
+        model.addAttribute("profile", fullUser.getProfile());
 
         return "profile";
     }
@@ -41,18 +42,18 @@ public class ProfileController {
             Model model
     ) {
 
-        if (result.hasErrors()) {
-            model.addAttribute("user",
-                    profileService.getCurrentUser(
-                            (String) session.getAttribute("currentUser")
-                    ));
+        User user = (User) session.getAttribute("currentUser");
 
+        if (user == null) {
+            return "redirect:/auth/login";
+        }
+
+        if (result.hasErrors()) {
+            model.addAttribute("user", profileService.getCurrentUser(user.getUsername()));
             return "profile";
         }
 
-        String username = (String) session.getAttribute("currentUser");
-
-        profileService.updateProfile(username, profile);
+        profileService.updateProfile(user.getUsername(), profile);
 
         return "redirect:/profile";
     }

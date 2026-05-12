@@ -56,6 +56,33 @@ public class AuthController {
         return "redirect:/auth/login";
     }
 
+//    @PostMapping("/login")
+//    public String login(HttpServletRequest request,
+//                        @RequestParam String username,
+//                        @RequestParam String password,
+//                        Model model) {
+//
+//        User user = authService.login(username, password);
+//
+//
+//        if (user == null) {
+//            model.addAttribute("error", "Sai tai khoan hoac mat khau");
+//            return "login";
+//        }
+//
+//        HttpSession session = request.getSession();
+//        session.setAttribute("currentUser", user.getUsername());
+//        session.setAttribute("currentRole", user.getRole().name());
+//
+//        if (user.getRole() == Role.ADMIN)
+//            return "redirect:/admin";
+//
+//        if (user.getRole() == Role.STAFF)
+//            return "redirect:/admin/tickets";
+//
+//        return "redirect:/home";
+//    }
+
     @PostMapping("/login")
     public String login(HttpServletRequest request,
                         @RequestParam String username,
@@ -70,7 +97,9 @@ public class AuthController {
         }
 
         HttpSession session = request.getSession();
-        session.setAttribute("currentUser", user.getUsername());
+
+        session.setAttribute("currentUser", user);
+        session.setAttribute("currentUserId", user.getId());
         session.setAttribute("currentRole", user.getRole().name());
 
         if (user.getRole() == Role.ADMIN)

@@ -15,22 +15,19 @@ public class TripService {
     private final TripRepository tripRepository;
 
     // tìm chuyến theo điểm đi, điểm đến, ngày
-    public List<Trip> findTrips(Integer departureId,
-                                Integer destinationId,
-                                LocalDate date) {
+    public List<Trip> findTrips(
+            Integer departureId,
+            Integer destinationId,
+            LocalDate date
+    ) {
 
-        return tripRepository.findTrips(
-                departureId,
-                destinationId,
-                date
-        );
+        return tripRepository.findTrips(departureId, destinationId, date);
     }
 
     // tìm theo id
     public Trip findById(Integer id) {
 
         return tripRepository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Không tìm thấy chuyến"));
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy chuyến"));
     }
 }

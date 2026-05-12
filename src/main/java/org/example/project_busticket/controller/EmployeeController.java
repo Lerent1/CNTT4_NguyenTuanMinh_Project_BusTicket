@@ -19,16 +19,15 @@ public class EmployeeController {
 
         String role = (String) session.getAttribute("currentRole");
 
-        if (!"STAFF".equals(role))
+        if (!"STAFF".equals(role)) {
             return "redirect:/home";
+        }
 
-        model.addAttribute("tickets",
-                ticketService.getPendingTickets());
+        model.addAttribute("tickets", ticketService.getPendingTickets());
 
-        return "employee/ticketList"; // 👈 SỬA Ở ĐÂY
+        return "employee/ticketList";
     }
 
-    // XÁC NHẬN → PENDING → PAID
     @PostMapping("/confirm/{id}")
     public String confirm(@PathVariable Long id, HttpSession session) {
 
@@ -42,7 +41,6 @@ public class EmployeeController {
         return "redirect:/admin/tickets";
     }
 
-    // HỦY → CANCELLED + GHẾ AVAILABLE
     @PostMapping("/cancel/{id}")
     public String cancel(@PathVariable Long id, HttpSession session) {
 

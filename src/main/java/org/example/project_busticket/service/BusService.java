@@ -26,8 +26,7 @@ public class BusService {
     }
 
     public Bus getById(Long id) {
-        return busRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Bus not found"));
+        return busRepository.findById(id).orElseThrow(() -> new RuntimeException("Khong tim thay xe"));
     }
 
 //    public Bus getById(Long id) {
@@ -36,7 +35,7 @@ public class BusService {
 
     public void update(Bus bus) {
         Bus existing = busRepository.findById(bus.getId())
-                .orElseThrow(() -> new RuntimeException("Bus not found"));
+                .orElseThrow(() -> new RuntimeException("Khong tim thay xe"));
 
         existing.setLicensePlate(bus.getLicensePlate());
         existing.setBusType(bus.getBusType());

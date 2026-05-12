@@ -17,8 +17,7 @@ public class AuthService {
     // ================= LOGIN =================
     public User login(String username, String password) {
 
-        User user = userRepository.findByUsername(username)
-                .orElse(null);
+        User user = userRepository.findByUsername(username).orElse(null);
 
         if (user == null) return null;
 

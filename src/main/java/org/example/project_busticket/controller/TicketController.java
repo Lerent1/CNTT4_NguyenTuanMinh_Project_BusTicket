@@ -3,6 +3,7 @@ package org.example.project_busticket.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.project_busticket.model.Ticket;
+import org.example.project_busticket.model.User;
 import org.example.project_busticket.service.BookingService;
 import org.example.project_busticket.service.TicketService;
 import org.springframework.stereotype.Controller;
@@ -19,22 +20,43 @@ public class TicketController {
     private final BookingService bookingService;
     private final TicketService ticketService;
 
+    // ================= BOOK =================
     @PostMapping("/book-ticket")
-    public String bookTicket(
-            @RequestParam Long seatId,
-            @RequestParam String customerName,
-            @RequestParam String phone,
-            @RequestParam String email,
-            HttpSession session
-    ) {
+    public String bookTicket(@RequestParam Long seatId,
+                             @RequestParam String customerName,
+                             @RequestParam String phone,
+                             @RequestParam String email,
+                             HttpSession session) {
 
-        session.setAttribute("phone", phone);
+        Long userId = (Long) session.getAttribute("currentUserId");
+        User user = (User) session.getAttribute("currentUser");
 
-        Ticket ticket = bookingService.bookTicket(seatId, customerName, phone, email);
+        if (userId == null || user == null) {
+            return "redirect:/auth/login";
+        }
 
-        return "redirect:/ticket/search?code=" + ticket.getCode() + "&phone=" + ticket.getPhone();
+        bookingService.bookTicket(seatId, customerName, phone, email, user);
+
+        return "redirect:/myTicket";
     }
 
+    // ================= MY TICKET =================
+    @GetMapping("/myTicket")
+    public String myTickets(HttpSession session, Model model) {
+
+        Long userId = (Long) session.getAttribute("currentUserId");
+
+        if (userId == null) {
+            return "redirect:/auth/login";
+        }
+
+        model.addAttribute("tickets",
+                ticketService.findByUserId(userId));
+
+        return "myTicket";
+    }
+
+    // ================= SEARCH  =================
     @GetMapping("/ticket/search")
     public String searchTicket(
             @RequestParam(required = false) String code,
@@ -50,29 +72,16 @@ public class TicketController {
             Ticket ticket = ticketService.findTicketDetail(code, phone);
             model.addAttribute("ticket", ticket);
         } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
+            model.addAttribute("error", "Không tìm thấy vé");
         }
 
         return "ticketDetail";
     }
 
-    @GetMapping("/myTicket")
-    public String myTickets(HttpSession session, Model model) {
-
-        String phone = (String) session.getAttribute("phone");
-
-        if (phone == null) {
-            model.addAttribute("tickets", List.of());
-            model.addAttribute("error", "Chưa có lịch sử vé");
-            return "myTicket";
-        }
-
-        model.addAttribute("tickets", ticketService.findByPhone(phone));
-        return "myTicket";
-    }
-
+    // ================= CANCEL =================
     @PostMapping("/cancel/{id}")
-    public String cancelTicket(@PathVariable Long id, RedirectAttributes ra) {
+    public String cancelTicket(@PathVariable Long id,
+                               RedirectAttributes ra) {
 
         try {
             ticketService.cancelTicket(id);
