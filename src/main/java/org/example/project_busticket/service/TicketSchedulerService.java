@@ -21,7 +21,7 @@ public class TicketSchedulerService {
     private final TicketRepository ticketRepository;
     private final SeatRepository seatRepository;
 
-    @Scheduled(fixedRate = 10 * 60 * 1000) // 10 phút
+    @Scheduled(fixedRate = 10 * 60 * 1000)
     @Transactional
     public void autoCancelExpiredTickets() {
 
