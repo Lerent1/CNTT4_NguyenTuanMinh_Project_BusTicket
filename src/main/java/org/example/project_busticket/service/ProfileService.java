@@ -3,6 +3,7 @@ package org.example.project_busticket.service;
 import lombok.RequiredArgsConstructor;
 import org.example.project_busticket.model.User;
 import org.example.project_busticket.model.UserProfiles;
+import org.example.project_busticket.dto.UserProfileDTO;
 import org.example.project_busticket.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ public class ProfileService {
 
     private final UserRepository userRepository;
 
-    public void updateProfile(String username, UserProfiles data) {
+    public void updateProfile(String username, UserProfileDTO dto) {
         User user = userRepository.findByUsername(username).orElseThrow();
 
         UserProfiles profile = user.getProfile();
@@ -22,10 +23,10 @@ public class ProfileService {
             profile.setUser(user);
         }
 
-        profile.setFullName(data.getFullName());
-        profile.setPhone(data.getPhone());
-        profile.setEmail(data.getEmail());
-        profile.setAddress(data.getAddress());
+        profile.setFullName(dto.getFullName());
+        profile.setPhone(dto.getPhone());
+        profile.setEmail(dto.getEmail());
+        profile.setAddress(dto.getAddress());
 
         user.setProfile(profile);
 

@@ -3,6 +3,7 @@ package org.example.project_busticket.controller;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.project_busticket.dto.UserProfileDTO;
 import org.example.project_busticket.model.User;
 import org.example.project_busticket.model.UserProfiles;
 import org.example.project_busticket.service.ProfileService;
@@ -29,14 +30,24 @@ public class ProfileController {
         User fullUser = profileService.getCurrentUser(user.getUsername());
 
         model.addAttribute("user", fullUser);
-        model.addAttribute("profile", fullUser.getProfile());
+
+        UserProfileDTO dto = new UserProfileDTO();
+
+        if (fullUser.getProfile() != null) {
+            dto.setFullName(fullUser.getProfile().getFullName());
+            dto.setPhone(fullUser.getProfile().getPhone());
+            dto.setEmail(fullUser.getProfile().getEmail());
+            dto.setAddress(fullUser.getProfile().getAddress());
+        }
+
+        model.addAttribute("profile", dto);
 
         return "profile";
     }
 
     @PostMapping("/profile/update")
     public String update(
-            @Valid @ModelAttribute("profile") UserProfiles profile,
+            @Valid @ModelAttribute("profile") UserProfileDTO dto,
             BindingResult result,
             HttpSession session,
             Model model
@@ -53,7 +64,7 @@ public class ProfileController {
             return "profile";
         }
 
-        profileService.updateProfile(user.getUsername(), profile);
+        profileService.updateProfile(user.getUsername(), dto);
 
         return "redirect:/profile";
     }
