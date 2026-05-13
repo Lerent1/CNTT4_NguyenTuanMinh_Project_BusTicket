@@ -1,6 +1,6 @@
 package org.example.project_busticket.repository;
 
-import org.example.project_busticket.model.Enums.TicketStatus;
+import org.example.project_busticket.model.enums.TicketStatus;
 import org.example.project_busticket.model.Ticket;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;

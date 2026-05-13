@@ -1,4 +1,4 @@
-package org.example.project_busticket.model.Enums;
+package org.example.project_busticket.model.enums;
 
 public enum SeatStatus {
     AVAILABLE,

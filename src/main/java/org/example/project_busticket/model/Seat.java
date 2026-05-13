@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.project_busticket.model.Enums.SeatStatus;
+import org.example.project_busticket.model.enums.SeatStatus;
 
 import java.time.LocalDateTime;
 

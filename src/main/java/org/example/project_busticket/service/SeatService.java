@@ -2,7 +2,7 @@ package org.example.project_busticket.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.project_busticket.model.Enums.SeatStatus;
+import org.example.project_busticket.model.enums.SeatStatus;
 import org.example.project_busticket.model.Seat;
 import org.example.project_busticket.repository.SeatRepository;
 import org.springframework.stereotype.Service;

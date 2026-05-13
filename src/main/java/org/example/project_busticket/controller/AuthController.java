@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.project_busticket.model.Enums.Role;
+import org.example.project_busticket.model.enums.Role;
 import org.example.project_busticket.model.User;
 import org.example.project_busticket.model.UserProfiles;
 import org.example.project_busticket.service.AuthService;

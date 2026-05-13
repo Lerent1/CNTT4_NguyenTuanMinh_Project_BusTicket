@@ -1,7 +1,7 @@
 package org.example.project_busticket.checkTime;
 
 import lombok.RequiredArgsConstructor;
-import org.example.project_busticket.model.Enums.SeatStatus;
+import org.example.project_busticket.model.enums.SeatStatus;
 import org.example.project_busticket.model.Seat;
 import org.example.project_busticket.repository.SeatRepository;
 import org.springframework.scheduling.annotation.Scheduled;
