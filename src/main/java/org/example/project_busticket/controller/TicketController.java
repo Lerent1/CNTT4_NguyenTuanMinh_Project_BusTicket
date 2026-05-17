@@ -58,22 +58,43 @@ public class TicketController {
 
     // ================= SEARCH  =================
     @GetMapping("/ticket/search")
-    public String searchTicket(
-            @RequestParam(required = false) String code,
-            @RequestParam(required = false) String phone,
+    public String ticketSearchPage() {
+        return "ticketSearch";
+    }
+
+    // ================= SEARCH ACTION =================
+    @GetMapping("/ticket/detail")
+    public String ticketDetail(
+            @RequestParam String code,
+            @RequestParam String phone,
             Model model
     ) {
 
-        if (code == null || phone == null) {
+        Ticket ticket = ticketService.findTicketDetail(code, phone);
+
+        if (ticket == null) {
+            model.addAttribute("error", "Không tìm thấy vé");
             return "ticketSearch";
         }
 
-        try {
-            Ticket ticket = ticketService.findTicketDetail(code, phone);
-            model.addAttribute("ticket", ticket);
-        } catch (Exception e) {
+        model.addAttribute("ticket", ticket);
+
+        return "ticketDetail";
+    }
+
+    // ================= DETAIL =================
+    @GetMapping("/ticket/detail/{id}")
+    public String ticketDetail(@PathVariable Long id,
+                               Model model) {
+
+        Ticket ticket = ticketService.findById(id);
+
+        if (ticket == null) {
             model.addAttribute("error", "Không tìm thấy vé");
+            return "redirect:/myTicket";
         }
+
+        model.addAttribute("ticket", ticket);
 
         return "ticketDetail";
     }
@@ -85,7 +106,7 @@ public class TicketController {
 
         try {
             ticketService.cancelTicket(id);
-            ra.addFlashAttribute("success", "Hủy vé thành công!");
+            ra.addFlashAttribute("success", "Hủy vé thành công");
         } catch (Exception e) {
             ra.addFlashAttribute("error", e.getMessage());
         }

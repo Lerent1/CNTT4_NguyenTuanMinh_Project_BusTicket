@@ -23,8 +23,7 @@ public class Bus {
     private Long id;
 
     @NotBlank(message = "License Plate không được để trống")
-    @Size(min = 5, max = 20,
-            message = "License Plate phải từ 5-20 ký tự")
+    @Size(min = 5, max = 20, message = "License Plate phải từ 5-20 ký tự")
     @Column(unique = true)
     private String licensePlate;
 

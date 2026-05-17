@@ -26,72 +26,135 @@
     </div>
 
     <!-- DANH SÁCH VÉ -->
-    <div th:if="${tickets != null && !#lists.isEmpty(tickets)}">
-        <table class="table table-bordered table-hover">
+    <div th:if="${tickets != null && !#lists.isEmpty(tickets)}"
+         class="card shadow">
 
-            <thead class="thead-dark">
-            <tr>
-                <th>Mã vé</th>
-                <th>Khách hàng</th>
-                <th>SĐT</th>
-                <th>Chuyến</th>
-                <th>Ghế</th>
-                <th>Giá</th>
-                <th>Trạng thái</th>
-                <th width="180">Hành động</th>
-            </tr>
-            </thead>
+        <div class="card-body p-0">
 
-            <tbody>
+            <div class="table-responsive">
 
-            <tr th:each="ticket : ${tickets}">
+                <table class="table table-hover table-bordered mb-0">
 
-                <td th:text="${ticket.code}"></td>
+                    <thead class="thead-dark">
 
-                <td th:text="${ticket.customerName}"></td>
+                    <tr>
+                        <th>Mã vé</th>
+                        <th>Khách hàng</th>
+                        <th>SĐT</th>
+                        <th>Tuyến đường</th>
+                        <th>Ghế</th>
+                        <th>Giá vé</th>
+                        <th>Trạng thái</th>
+                        <th width="220">
+                            Hành động
+                        </th>
 
-                <td th:text="${ticket.phone}"></td>
+                    </tr>
 
-                <td>
-                    <span th:text="${ticket.trip.route.departure.name}"></span>
-                    →
-                    <span th:text="${ticket.trip.route.destination.name}"></span>
-                </td>
+                    </thead>
 
-                <td th:text="${ticket.seat.seatNumber}"></td>
+                    <tbody>
 
-                <td th:text="${ticket.totalPrice}"></td>
+                    <tr th:each="ticket : ${tickets}">
 
-                <td>
-                    <span class="badge badge-warning">
-                        PENDING
-                    </span>
-                </td>
+                        <!-- CODE -->
+                        <td class="font-weight-bold text-primary"
+                            th:text="${ticket.code}">
+                        </td>
 
-                <td class="text-center">
+                        <!-- CUSTOMER -->
+                        <td th:text="${ticket.customerName}">
+                        </td>
 
-                    <!-- XÁC NHẬN -->
-                    <form th:action="@{'/admin/tickets/confirm/' + ${ticket.id}}" method="post" style="display:inline;">
-                        <button class="btn btn-success btn-sm">
-                            Xác nhận
-                        </button>
-                    </form>
+                        <!-- PHONE -->
+                        <td th:text="${ticket.phone}">
+                        </td>
 
-                    <form th:action="@{'/admin/tickets/cancel/' + ${ticket.id}}" method="post" style="display:inline;">
-                        <button class="btn btn-danger btn-sm">
-                            Hủy
-                        </button>
-                    </form>
+                        <!-- ROUTE -->
+                        <td>
 
-                </td>
+                            <span th:text="${ticket.trip.route.departure.name}">
+                            </span>
 
-            </tr>
+                            <i class="fa-solid fa-arrow-right mx-1 text-muted"></i>
 
-            </tbody>
+                            <span th:text="${ticket.trip.route.destination.name}">
+                            </span>
 
-        </table>
+                        </td>
+
+                        <!-- SEAT -->
+                        <td class="text-center"
+                            th:text="${ticket.seat.seatNumber}">
+                        </td>
+
+                        <!-- PRICE -->
+                        <td class="text-danger font-weight-bold">
+
+                            <span th:text="${#numbers.formatDecimal(ticket.totalPrice,0,'COMMA',0,'POINT')}">
+                            </span>
+
+                            VNĐ
+
+                        </td>
+
+                        <!-- STATUS -->
+                        <td class="text-center">
+
+                            <span class="badge badge-warning badge-status">
+                                PENDING
+                            </span>
+
+                        </td>
+
+                        <!-- ACTION -->
+                        <td class="text-center">
+
+                            <!-- CONFIRM -->
+                            <form th:action="@{'/admin/tickets/confirm/' + ${ticket.id}}"
+                                  method="post"
+                                  style="display:inline-block;">
+
+                                <button type="submit"
+                                        class="btn btn-success btn-sm">
+
+                                    <i class="fa-solid fa-check mr-1"></i>
+                                    Xác nhận
+
+                                </button>
+
+                            </form>
+
+                            <!-- CANCEL -->
+                            <form th:action="@{'/admin/tickets/cancel/' + ${ticket.id}}"
+                                  method="post"
+                                  style="display:inline-block;"
+                                  onsubmit="return confirm('Bạn có chắc muốn hủy vé này?');">
+
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm">
+
+                                    <i class="fa-solid fa-xmark mr-1"></i>
+                                    Hủy
+
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
 
     </div>
+
 </div>
 
 <!-- Optional JavaScript -->

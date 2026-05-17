@@ -117,7 +117,7 @@
                         </span>
                     </td>
                     <td class="text-center">
-                        <a th:href="@{/ticket/search(code=${t.code}, phone=${t.phone})}"
+                        <a th:href="@{'/ticket/detail/' + ${t.id}}"
                            class="btn btn-sm btn-primary">
                             Xem chi tiết
                         </a>

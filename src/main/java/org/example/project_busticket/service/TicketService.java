@@ -24,8 +24,11 @@ public class TicketService {
 
     // ================= SEARCH =================
     public Ticket findTicketDetail(String code, String phone) {
-        return ticketRepository.findTicketDetail(code, phone)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy vé"));
+        return ticketRepository.findTicketDetail(code, phone).orElse(null);
+    }
+
+    public Ticket findById(Long id) {
+        return ticketRepository.findById(id).orElse(null);
     }
 
     public List<Ticket> getPendingTickets() {

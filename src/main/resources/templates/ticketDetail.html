@@ -40,116 +40,172 @@
     </div>
 </nav>
 
-<div class="container mt-5">
+<!-- CONTENT -->
+<div class="container mt-5 mb-5">
 
-    <div class="card shadow">
+    <div class="row justify-content-center">
 
-        <!-- HEADER -->
-        <div class="card-header bg-info text-white">
-            Chi tiết vé
+        <div class="col-lg-10">
+
+            <div class="card shadow-lg ticket-card">
+
+                <!-- HEADER -->
+                <div class="ticket-header">
+
+                    <h4>
+                        <i class="fa-solid fa-ticket mr-2"></i>
+                        Thông tin vé
+                    </h4>
+
+                </div>
+
+                <!-- BODY -->
+                <div class="ticket-body">
+
+                    <div class="row">
+
+                        <!-- MÃ VÉ -->
+                        <div class="col-md-6 mb-4">
+
+                            <label>Mã vé</label>
+
+                            <input class="form-control"
+                                   th:value="${ticket.code}"
+                                   readonly>
+
+                        </div>
+
+                        <!-- KHÁCH HÀNG -->
+                        <div class="col-md-6 mb-4">
+
+                            <label>Khách hàng</label>
+
+                            <input class="form-control"
+                                   th:value="${ticket.customerName}"
+                                   readonly>
+
+                        </div>
+
+                        <!-- PHONE -->
+                        <div class="col-md-6 mb-4">
+
+                            <label>Số điện thoại</label>
+
+                            <input class="form-control"
+                                   th:value="${ticket.phone}"
+                                   readonly>
+
+                        </div>
+
+                        <!-- EMAIL -->
+                        <div class="col-md-6 mb-4">
+
+                            <label>Email</label>
+
+                            <input class="form-control"
+                                   th:value="${ticket.email}"
+                                   readonly>
+
+                        </div>
+
+                        <!-- GHẾ -->
+                        <div class="col-md-6 mb-4">
+
+                            <label>Ghế</label>
+
+                            <input class="form-control"
+                                   th:value="${ticket.seat.seatNumber}"
+                                   readonly>
+
+                        </div>
+
+                        <!-- TRẠNG THÁI -->
+                        <div class="col-md-6 mb-4">
+
+                            <label>Trạng thái</label>
+
+                            <input class="form-control"
+                                   th:value="${ticket.status}"
+                                   readonly>
+
+                        </div>
+
+                        <!-- ĐIỂM ĐI -->
+                        <div class="col-md-6 mb-4">
+
+                            <label>Điểm đi</label>
+
+                            <input class="form-control"
+                                   th:value="${ticket.trip.route.departure.name}"
+                                   readonly>
+
+                        </div>
+
+                        <!-- ĐIỂM ĐẾN -->
+                        <div class="col-md-6 mb-4">
+
+                            <label>Điểm đến</label>
+
+                            <input class="form-control"
+                                   th:value="${ticket.trip.route.destination.name}"
+                                   readonly>
+
+                        </div>
+
+                        <!-- GIỜ KHỞI HÀNH -->
+                        <div class="col-md-6 mb-4">
+
+                            <label>Ngày khởi hành</label>
+
+                            <input class="form-control"
+                                   th:value="${ticket.trip.departureTime}"
+                                   readonly>
+
+                        </div>
+
+                        <!-- GIÁ -->
+                        <div class="col-md-6 mb-4">
+
+                            <label>Giá vé</label>
+
+                            <input class="form-control text-success font-weight-bold"
+                                   th:value="${ticket.totalPrice}"
+                                   readonly>
+
+                        </div>
+
+                    </div>
+
+                    <!-- BUTTON -->
+                    <div class="mt-4 d-flex">
+
+                        <a th:href="@{/home}" class="btn btn-outline-secondary">
+                            ← Quay lại
+                        </a>
+
+                        <form th:if="${ticket.status.name() != 'CANCELLED'}"
+                              th:action="@{'/cancel/' + ${ticket.id}}"
+                              method="post"
+                              class="ml-2">
+
+                            <button class="btn btn-danger btn-custom"
+                                    onclick="return confirm('Bạn có chắc muốn hủy vé?')">
+
+                                <i class="fa-solid fa-xmark mr-2"></i>
+                                Hủy vé
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="card-body">
-
-            <!-- SUCCESS MESSAGE -->
-            <div th:if="${success != null}" class="alert alert-success">
-                <span th:text="${success}"></span>
-            </div>
-
-            <!-- ERROR MESSAGE -->
-            <div th:if="${error != null}" class="alert alert-danger">
-                <span th:text="${error}"></span>
-            </div>
-
-            <!-- TABLE INFO -->
-            <table class="table table-bordered">
-
-                <tr>
-                    <th>Mã vé</th>
-                    <td th:text="${ticket.code}"></td>
-                </tr>
-
-                <tr>
-                    <th>Khách hàng</th>
-                    <td th:text="${ticket.customerName}"></td>
-                </tr>
-
-                <tr>
-                    <th>Số điện thoại</th>
-                    <td th:text="${ticket.phone}"></td>
-                </tr>
-
-                <tr>
-                    <th>Email</th>
-                    <td th:text="${ticket.email}"></td>
-                </tr>
-
-                <tr>
-                    <th>Biển số xe</th>
-                    <td th:text="${ticket.trip.bus.licensePlate}"></td>
-                </tr>
-
-                <tr>
-                    <th>Loại xe</th>
-                    <td th:text="${ticket.trip.bus.busType}"></td>
-                </tr>
-
-                <tr>
-                    <th>Tài xế</th>
-                    <td th:text="${ticket.trip.bus.driverName}"></td>
-                </tr>
-
-                <tr>
-                    <th>Tuyến đường</th>
-                    <td>
-                        <span th:text="${ticket.trip.route.departure.name}"></span>
-                        →
-                        <span th:text="${ticket.trip.route.destination.name}"></span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <th>Ngày giờ đi</th>
-                    <td th:text="${ticket.trip.departureTime}"></td>
-                </tr>
-
-                <tr>
-                    <th>Số ghế</th>
-                    <td th:text="${ticket.seat.seatNumber}"></td>
-                </tr>
-
-                <tr>
-                    <th>Trạng thái</th>
-                    <td th:text="${ticket.status}"></td>
-                </tr>
-
-                <tr>
-                    <th>Giá</th>
-                    <td th:text="${ticket.totalPrice}"></td>
-                </tr>
-
-            </table>
-
-            <!-- BACK -->
-            <a href="/home" class="btn btn-secondary">
-                Quay lại
-            </a>
-
-            <!-- CORE-09: NÚT HỦY -->
-            <div class="mt-3 flex " th:if="${ticket != null and ticket.status != null and ticket.status.name() != 'CANCELLED'}">
-
-                <form th:action="@{'/cancel/' + ${ticket.id}}" method="post"
-                      onsubmit="return confirm('Bạn có chắc muốn hủy vé này?');">
-
-                    <button class="btn btn-danger">
-                        Hủy vé
-                    </button>
-
-                </form>
-
-            </div>
-
-        </div>
     </div>
 
 </div>

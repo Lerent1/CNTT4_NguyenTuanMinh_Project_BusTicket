@@ -32,127 +32,67 @@
     </div>
 </nav>
 
+<!-- CONTENT -->
 <div class="container mt-5">
 
-    <!-- SEARCH -->
-    <div class="card shadow search-card">
-        <div class="card-body p-4">
+    <div class="row justify-content-center">
 
-            <div class="d-flex align-items-center mb-4">
+        <div class="col-md-7">
 
-                <div class="icon-box">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
+            <div class="card shadow">
 
-                <div class="ml-3">
-                    <h4 class="mb-1 font-weight-bold">Tra cứu vé</h4>
-                    <small class="text-muted">Nhập mã vé và số điện thoại để xem thông tin</small>
-                </div>
+                <div class="card-body p-5">
 
-            </div>
+                    <h3 class="mb-4 text-center">
+                        Tra cứu vé xe
+                    </h3>
 
-            <!-- ERROR -->
-            <div th:if="${error}" class="alert alert-danger">
-                <i class="fa-solid fa-circle-exclamation mr-2"></i>
-                <span th:text="${error}"></span>
-            </div>
+                    <!-- ERROR -->
+                    <div th:if="${error != null}"
+                         class="alert alert-danger">
 
-            <!-- FORM -->
-            <form method="get" action="/ticket/search">
+                        <span th:text="${error}"></span>
 
-                <div class="row">
-
-                    <div class="col-md-6 mb-2">
-                        <label>Mã vé</label>
-                        <input type="text" name="code"
-                               class="form-control form-control-lg"
-                               placeholder="VD: TK12345"
-                               required>
                     </div>
 
-                    <div class="col-md-6 mb-2">
-                        <label>Số điện thoại</label>
-                        <input type="text" name="phone"
-                               class="form-control form-control-lg"
-                               placeholder="VD: 09xxxxxxx"
-                               required>
-                    </div>
+                    <!-- FORM -->
+                    <form th:action="@{/ticket/detail}"
+                          method="get">
 
-                </div>
+                        <div class="form-group">
 
-                <div class="mt-3">
-                    <button class="btn btn-info">
-                        <i class="fa-solid fa-magnifying-glass mr-1"></i>
-                        Tra cứu
-                    </button>
+                            <label>Mã vé</label>
 
-                    <a th:href="@{/home}" class="btn btn-secondary">
-                        Quay lại
-                    </a>
-                </div>
+                            <input type="text"
+                                   name="code"
+                                   class="form-control"
+                                   required>
 
-            </form>
+                        </div>
 
-        </div>
-    </div>
+                        <div class="form-group">
 
-    <!-- RESULT -->
-    <div th:if="${ticket != null}" class="card shadow mt-4 ticket-card">
+                            <label>Số điện thoại</label>
 
-        <div class="card-header bg-success text-white">
-            <i class="fa-solid fa-ticket mr-2"></i>
-            Thông tin vé
-        </div>
+                            <input type="text"
+                                   name="phone"
+                                   class="form-control"
+                                   required>
 
-        <div class="card-body">
+                        </div>
 
-            <div class="row">
+                        <div class="d-flex justify-content-between mt-4">
+                            <a th:href="@{/home}" class="btn btn-outline-secondary">
+                                ← Quay lại
+                            </a>
 
-                <div class="col-md-6 mb-3">
-                    <label>Mã vé</label>
-                    <input class="form-control" th:value="${ticket.code}" readonly>
-                </div>
+                            <button class="btn btn-info btn-block">
+                                Tra cứu
+                            </button>
+                        </div>
 
-                <div class="col-md-6 mb-3">
-                    <label>Khách hàng</label>
-                    <input class="form-control" th:value="${ticket.customerName}" readonly>
-                </div>
+                    </form>
 
-                <div class="col-md-6 mb-3">
-                    <label>Số điện thoại</label>
-                    <input class="form-control" th:value="${ticket.phone}" readonly>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label>Ghế</label>
-                    <input class="form-control" th:value="${ticket.seat.seatNumber}" readonly>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label>Trạng thái</label>
-                    <input class="form-control" th:value="${ticket.status}" readonly>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label>Điểm đi</label>
-                    <input class="form-control" th:value="${ticket.seat.trip.route.departure.name}"
-                           readonly>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label>Điểm đến</label>
-                    <input class="form-control" th:value="${ticket.seat.trip.route.destination.name}"
-                           readonly>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label>Ngày khởi hành</label>
-                    <input class="form-control" th:value="${ticket.seat.trip.departureTime}" readonly>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label>Giá vé</label>
-                    <input class="form-control" th:value="${ticket.seat.trip.price}" readonly>
                 </div>
 
             </div>
